@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:integration="http://www.springframework.org/schema/integration"
+	xmlns:int-mongodb="http://www.springframework.org/schema/integration/mongodb"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:int-xml="http://www.springframework.org/schema/integration/xml"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                                 http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.2.xsd
+                                 http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+                                 http://www.springframework.org/schema/integration/mail http://www.springframework.org/schema/integration/mail/spring-integration-mail-4.2.xsd
+                                 http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml-4.2.xsd
+                                 http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+                                 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                                 http://www.springframework.org/schema/integration/mongodb  https://www.springframework.org/schema/integration/mongodb/spring-integration-mongodb.xsd 
+                                 http://www.springframework.org/schema/integration/stream http://www.springframework.org/schema/integration/stream/spring-integration-stream-4.2.xsd">
+
+	<int:channel id="replyChannel" />
+
+<!-- Bean declarations starts -->
+	<bean id="jmsConnectionFactory"
+		class="org.apache.activemq.ActiveMQConnectionFactory"
+		p:brokerURL="tcp://localhost:61616" p:trustAllPackages="true" />
+
+	<bean id="jaxb2Marshaller"
+		class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+
+		<property name="schema"
+			value="classpath:/VoterInformation.xsd" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.voter.verification.model</value>
+			</list>
+		</property>
+	</bean>
+	
+<!-- Bean declarations ends -->
+<!-- Gateway declarations starts -->
+	<jms:inbound-channel-adapter id="inbound.q.id" channel="replyChannel" connection-factory="jmsConnectionFactory" destination="voterOutputQueue">
+		<integration:poller id="poller.id" fixed-delay="10000" />
+	</jms:inbound-channel-adapter>
+
+	
+	<int:service-activator
+		id="service.activator.input.id"
+		input-channel="replyChannel"
+		output-channel="xml.reader.output" ref="voterConsumerServiceActivator"
+		method="consumerMessage" />
+	
+	<!-- Bean definitions to be used for the integrations -->
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="voterinformation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="voterId" maxOccurs="1" minOccurs="1" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int" />
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="voterName" maxOccurs="1" minOccurs="1"
+					nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:string" />
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="voterAddress" maxOccurs="1"
+					minOccurs="1" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:string" />
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="voterProvince" maxOccurs="1"
+					minOccurs="1" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:string" />
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="isEligible" maxOccurs="1" minOccurs="1"
+					nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:boolean" />
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
