@@ -42,7 +42,7 @@
 <!-- Bean declarations ends -->
 <!-- Gateway declarations starts -->
 	<jms:inbound-channel-adapter id="inbound.q.id" channel="replyChannel" connection-factory="jmsConnectionFactory" destination="voterOutputQueue">
-		<integration:poller id="poller.id" fixed-delay="10000" />
+		<integration:poller id="poller.id" fixed-delay="2000" />
 	</jms:inbound-channel-adapter>
 
 	
