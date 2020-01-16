@@ -21,6 +21,11 @@
                                  http://www.springframework.org/schema/integration/stream http://www.springframework.org/schema/integration/stream/spring-integration-stream-4.2.xsd">
 
 	<int:channel id="replyChannel" />
+	<int:channel id="filter.output.channel" />
+	<int:channel id = "filter.input.channel" />
+	<int:channel id = "filter.discard.channel" />
+	<int:channel id = "filter.input.discard.channel" />
+	
 
 <!-- Bean declarations starts -->
 	<bean id="jmsConnectionFactory"
@@ -33,9 +38,7 @@
 		<property name="schema"
 			value="classpath:/VoterInformation.xsd" />
 		<property name="packagesToScan">
-			<list>
-				<value>com.voter.verification.model</value>
-			</list>
+				<value>com.voter.app.consumer.model</value>
 		</property>
 	</bean>
 	
@@ -46,11 +49,25 @@
 	</jms:inbound-channel-adapter>
 
 	
-	<int:service-activator
-		id="service.activator.input.id"
-		input-channel="replyChannel"
-		output-channel="xml.reader.output" ref="voterConsumerServiceActivator"
+	
+	<int:chain id = "1.chain" input-channel="replyChannel" output-channel="xml.reader.output">
+	
+		<int-xml:unmarshalling-transformer
+			id="obj-to-xml-transformer" unmarshaller="jaxb2Marshaller" />
+		<int:service-activator
+		id="service.activator.input.id" ref="voterConsumerServiceActivator"
 		method="consumerMessage" />
+	</int:chain>
+	
+	<int:filter id="filter1.id" input-channel="xml.reader.output" output-channel="filter.output.channel" 
+	discard-channel="filter.discard.channel" expression="headers.get('iseligibleVoter').contains('true')"/>
+	
+	<int:service-activator id="id.1" input-channel="filter.output.channel" ref="voterConsumerServiceActivator" 
+	output-channel="filter.input.channel" method = "success"/>
+	
+	<int:service-activator id="id.2" input-channel="filter.discard.channel" ref="voterConsumerServiceActivator" 
+	output-channel="filter.input.discard.channel" method = "discard"/>
+	
 	
 	<!-- Bean definitions to be used for the integrations -->
 </beans>
