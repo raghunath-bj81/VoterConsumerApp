@@ -29,17 +29,17 @@ public class VoterMailSender {
 	 */
 	public void sendEmail(VoterEmailTemplate emailTemplate) {
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("thoya.mca@gmail.com");
-        boolean isBccAvailable = (!(emailTemplate.getBccAddress().isEmpty())) ? false : true;
+        msg.setTo(emailTemplate.getToAddress());
+        boolean isBccAvailable = (null != emailTemplate.getBccAddress() && !(emailTemplate.getBccAddress().isEmpty())) ? true : false;
         if(isBccAvailable) {
         	msg.setBcc(emailTemplate.getBccAddress());
         }
-        boolean isccAvailable = (!(emailTemplate.getCcAddress().isEmpty())) ? false : true;
+        boolean isccAvailable = (null != emailTemplate.getCcAddress() && !(emailTemplate.getCcAddress().isEmpty())) ? true : false;
         if(isccAvailable) {
         	msg.setCc(emailTemplate.getCcAddress());
         }
-        msg.setSubject(emailTemplate.getSubject());
-        msg.setText("Dear Applicant, \nYour Voter Application has been rejected due to the verification fail. \nPlease try applying in the next 30 days. \nWe regret the inconvenience caused. \nRegards,\nVoterAdmin,Telangana State");
+        msg.setSubject(new StringBuffer(emailTemplate.getSubject()).append(emailTemplate.getReferenceId()).toString());
+        msg.setText(emailTemplate.getMailContent());
         try {
         javaMailSender.send(msg);
         }

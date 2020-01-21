@@ -19,6 +19,8 @@ public class InEligibleVoters implements Serializable {
 	private String state;
 	private String remarks;
 	private String status;
+	private String emailId;
+	private String referenceId;
 	
 	public int getvoterId() {
 		return voterId;
@@ -59,23 +61,19 @@ public class InEligibleVoters implements Serializable {
 		this.status = status;
 	}
 	
-	public InEligibleVoters(int voterId, String voterName, int voterAge, String voterAddress, String state,
-			String remarks, String status) {
-		super();
-		this.voterId = voterId;
-		this.voterName = voterName;
-		this.voterAge = voterAge;
-		this.voterAddress = voterAddress;
-		this.state = state;
-		this.remarks = remarks;
-		this.status = status;
+	public String getEmailId() {
+		return emailId;
 	}
-	@Override
-	public String toString() {
-		return "InEligibleVoters [voterId=" + voterId + ", voterName=" + voterName + ", voterAge=" + voterAge
-				+ ", voterAddress=" + voterAddress + ", state=" + state + ", remarks=" + remarks + ", status=" + status
-				+ "]";
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
+	public String getReferenceId() {
+		return referenceId;
+	}
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
+	}
+	
 	public String getRemarks() {
 		return remarks;
 	}
@@ -84,5 +82,23 @@ public class InEligibleVoters implements Serializable {
 	}
 	public InEligibleVoters() {
 	}
-	
+	public InEligibleVoters(int voterId, String voterName, int voterAge, String voterAddress, String state,
+			String remarks, String status, String emailId, String referenceId) {
+		super();
+		this.voterId = voterId;
+		this.voterName = voterName;
+		this.voterAge = voterAge;
+		this.voterAddress = voterAddress;
+		this.state = state;
+		this.remarks = remarks;
+		this.status = status;
+		this.emailId = emailId;
+		this.referenceId = referenceId;
+	}
+	@Override
+	public String toString() {
+		return "InEligibleVoters [voterId=" + voterId + ", voterName=" + voterName + ", voterAge=" + voterAge
+				+ ", voterAddress=" + voterAddress + ", state=" + state + ", remarks=" + remarks + ", status=" + status
+				+ ", emailId=" + emailId + ", referenceId=" + referenceId + "]";
+	}
 }

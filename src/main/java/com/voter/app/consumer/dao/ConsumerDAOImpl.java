@@ -42,14 +42,11 @@ public class ConsumerDAOImpl implements ConsumerDAO {
 				update.set("state", eligibleVoter.getState());
 				mongoTemplate.updateFirst(query, update, EligibleVoters.class);
 			}
-			
 			VoterEmailTemplate emailTemplate = new VoterEmailTemplate();
-			emailTemplate.setToAddress("thoya.mca@gmail.com");
-			emailTemplate.setSubject("subject");
-			emailTemplate.setMailContent("Dear Applicant, \\nYour Voter Application has been rejected due to the verification fail. \\nPlease try applying in the next 30 days. \\nWe regret the inconvenience caused. \\nRegards,\\nVoterAdmin,Telangana State");
-			emailTemplate.setReferenceId("OXG89819O398");
-			
-			
+			emailTemplate.setToAddress(eligibleVoter.getEmailId());
+			emailTemplate.setSubject("Voter Application Status : ");
+			emailTemplate.setMailContent("Dear Applicant,\n \nYour Voter Application has been recieved and will be processed soon.\n \nPlease be updated with the notifications.\n \nRegards,\nVoter Admin,\nTelangana State");
+			emailTemplate.setReferenceId(eligibleVoter.getReferenceId());
 			mailSender.sendEmail(emailTemplate);
 		} catch(Exception ex) {
 			System.out.println("Error occured while saving the eligible voter information...");
@@ -71,6 +68,12 @@ public class ConsumerDAOImpl implements ConsumerDAO {
 				update.set("state", ineligibleVoter.getState());
 				mongoTemplate.updateFirst(query, update, EligibleVoters.class);
 			}
+			VoterEmailTemplate emailTemplate = new VoterEmailTemplate();
+			emailTemplate.setToAddress(ineligibleVoter.getEmailId());
+			emailTemplate.setSubject("Voter Application Status : ");
+			emailTemplate.setMailContent("Dear Applicant,\n \nYour Voter Application has been recieved and will be processed soon.\n \nPlease be updated with the notifications.\n \nRegards,\nVoter Admin,\nTelangana State");
+			emailTemplate.setReferenceId(ineligibleVoter.getReferenceId());
+			mailSender.sendEmail(emailTemplate);
 		} catch(Exception ex) {
 			System.out.println("Error occured while saving the ineligibleVoter voter information...");
 		}

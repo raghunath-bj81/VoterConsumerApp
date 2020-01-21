@@ -13,6 +13,8 @@ public class VoterMapper {
 		eligibleVoterInfo.setvoterName(voterInfo.getVoterName());
 		eligibleVoterInfo.setvoterAddress(voterInfo.getVoterAddress());
 		eligibleVoterInfo.setState(voterInfo.getVoterProvince());
+		eligibleVoterInfo.setEmailId(voterInfo.getEmailId());
+		eligibleVoterInfo.setReferenceId(voterInfo.getReferenceId());
 		return eligibleVoterInfo;
 	}
 	
@@ -24,6 +26,8 @@ public class VoterMapper {
 		inEligibleVoterInfo.setvoterName(voterInfo.getVoterName());
 		inEligibleVoterInfo.setvoterAddress(voterInfo.getVoterAddress());
 		inEligibleVoterInfo.setState(voterInfo.getVoterProvince());
+		inEligibleVoterInfo.setEmailId(voterInfo.getEmailId());
+		inEligibleVoterInfo.setReferenceId(voterInfo.getReferenceId());
 		inEligibleVoterInfo.setRemarks("Voter Age is less than 18.. as fixed by Indian Govt");
 		return inEligibleVoterInfo;
 	}

@@ -18,6 +18,8 @@ public class EligibleVoters implements Serializable {
 	private String voterAddress;
 	private String state;
 	private String status;
+	private String emailId;
+	private String referenceId;
 	
 	public int getvoterId() {
 		return voterId;
@@ -57,8 +59,22 @@ public class EligibleVoters implements Serializable {
 		this.status = status;
 	}
 	
-	public EligibleVoters(int voterId, String voterName, int voterAge, String voterAddress, String state,
-			String status) {
+	public EligibleVoters() {
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	public String getReferenceId() {
+		return referenceId;
+	}
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
+	}
+	public EligibleVoters(int voterId, String voterName, int voterAge, String voterAddress, String state, String status,
+			String emailId, String referenceId) {
 		super();
 		this.voterId = voterId;
 		this.voterName = voterName;
@@ -66,12 +82,13 @@ public class EligibleVoters implements Serializable {
 		this.voterAddress = voterAddress;
 		this.state = state;
 		this.status = status;
-	}
-	public EligibleVoters() {
+		this.emailId = emailId;
+		this.referenceId = referenceId;
 	}
 	@Override
 	public String toString() {
 		return "EligibleVoters [voterId=" + voterId + ", voterName=" + voterName + ", voterAge=" + voterAge
-				+ ", voterAddress=" + voterAddress + ", state=" + state + ", status=" + status + "]";
+				+ ", voterAddress=" + voterAddress + ", state=" + state + ", status=" + status + ", emailId=" + emailId
+				+ ", referenceId=" + referenceId + "]";
 	}
 }

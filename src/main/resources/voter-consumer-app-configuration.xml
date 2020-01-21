@@ -64,8 +64,6 @@
 	<int:service-activator id="id.1" input-channel="filter.output.channel" ref="voterConsumerServiceActivator" 
 	output-channel="filter.input.channel" method = "success"/>
 	
-	
-	
 	<int:service-activator id="id.2" input-channel="filter.discard.channel" ref="voterConsumerServiceActivator" 
 	output-channel="filter.input.discard.channel" method = "discard"/>
 	
