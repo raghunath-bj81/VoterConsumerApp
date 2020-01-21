@@ -39,6 +39,20 @@
 						<xs:restriction base="xs:int" />
 					</xs:simpleType>
 				</xs:element>
+				
+				<xs:element name="referenceId" maxOccurs="1" minOccurs="1"
+					nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:string" />
+					</xs:simpleType>
+				</xs:element>
+				
+				<xs:element name="emailId" maxOccurs="1" minOccurs="1"
+					nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:string" />
+					</xs:simpleType>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

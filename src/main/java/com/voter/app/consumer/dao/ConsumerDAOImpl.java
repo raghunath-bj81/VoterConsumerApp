@@ -5,12 +5,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Repository;
 
+import com.voter.app.consumer.communicate.VoterMailSender;
 import com.voter.app.consumer.model.EligibleVoters;
 import com.voter.app.consumer.model.InEligibleVoters;
+import com.voter.app.consumer.model.VoterEmailTemplate;
 
 /**
  * 
@@ -24,7 +24,7 @@ public class ConsumerDAOImpl implements ConsumerDAO {
 	private MongoTemplate mongoTemplate;
 	
 	@Autowired
-    private JavaMailSender javaMailSender;
+	private VoterMailSender mailSender;
 
 	@Override
 	public void saveEligibleVoters(EligibleVoters eligibleVoter) {
@@ -42,7 +42,12 @@ public class ConsumerDAOImpl implements ConsumerDAO {
 				update.set("state", eligibleVoter.getState());
 				mongoTemplate.updateFirst(query, update, EligibleVoters.class);
 			}
-			sendEmail();
+			VoterEmailTemplate emailTemplate = new VoterEmailTemplate();
+			emailTemplate.setToAddress(eligibleVoter.getEmailId());
+			emailTemplate.setSubject("Voter Application Status : ");
+			emailTemplate.setMailContent("Dear Applicant,\n \nYour Voter Application has been recieved and will be processed soon.\n \nPlease be updated with the notifications.\n \nRegards,\nVoter Admin,\nTelangana State");
+			emailTemplate.setReferenceId(eligibleVoter.getReferenceId());
+			mailSender.sendEmail(emailTemplate);
 		} catch(Exception ex) {
 			System.out.println("Error occured while saving the eligible voter information...");
 		}
@@ -63,25 +68,14 @@ public class ConsumerDAOImpl implements ConsumerDAO {
 				update.set("state", ineligibleVoter.getState());
 				mongoTemplate.updateFirst(query, update, EligibleVoters.class);
 			}
+			VoterEmailTemplate emailTemplate = new VoterEmailTemplate();
+			emailTemplate.setToAddress(ineligibleVoter.getEmailId());
+			emailTemplate.setSubject("Voter Application Status : ");
+			emailTemplate.setMailContent("Dear Applicant,\n \nYour Voter Application has been recieved and will be processed soon.\n \nPlease be updated with the notifications.\n \nRegards,\nVoter Admin,\nTelangana State");
+			emailTemplate.setReferenceId(ineligibleVoter.getReferenceId());
+			mailSender.sendEmail(emailTemplate);
 		} catch(Exception ex) {
 			System.out.println("Error occured while saving the ineligibleVoter voter information...");
 		}
 	}
-	
-	void sendEmail() {
-
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("thoya.mca@gmail.com");
-
-        msg.setSubject("Voter Application Status : OXG89819O398");
-        msg.setText("Dear Applicant, \nYour Voter Application has been rejected due to the verification fail. \nPlease try applying in the next 30 days. \nWe regret the inconvenience caused. \nRegards,\nVoterAdmin,Telangana State");
-        try {
-        javaMailSender.send(msg);
-        }
-        catch(Exception ex) {
-        	ex.printStackTrace();
-        }
-
-    }
-
 }
