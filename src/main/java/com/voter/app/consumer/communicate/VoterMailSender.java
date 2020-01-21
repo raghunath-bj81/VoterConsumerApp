@@ -5,6 +5,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+import com.voter.app.consumer.model.VoterEmailTemplate;
+
 /**
  * Mail send component which will use the mail template and send an emails.
  * @author Raghunath
@@ -25,18 +27,18 @@ public class VoterMailSender {
 	 * @param reciepentBCC
 	 * @param voterRefNo
 	 */
-	public void sendEmail(String subject, String mailContent, String reciepentTo, String reciepentCC, String reciepentBCC, String voterRefNo) {
+	public void sendEmail(VoterEmailTemplate emailTemplate) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo("thoya.mca@gmail.com");
-        boolean isBccAvailable = (!(reciepentBCC.isEmpty())) ? false : true;
+        boolean isBccAvailable = (!(emailTemplate.getBccAddress().isEmpty())) ? false : true;
         if(isBccAvailable) {
-        	msg.setBcc(reciepentBCC);
+        	msg.setBcc(emailTemplate.getBccAddress());
         }
-        boolean isccAvailable = (!(reciepentCC.isEmpty())) ? false : true;
+        boolean isccAvailable = (!(emailTemplate.getCcAddress().isEmpty())) ? false : true;
         if(isccAvailable) {
-        	msg.setCc(reciepentCC);
+        	msg.setCc(emailTemplate.getCcAddress());
         }
-        msg.setSubject("Voter Application Status : ");
+        msg.setSubject(emailTemplate.getSubject());
         msg.setText("Dear Applicant, \nYour Voter Application has been rejected due to the verification fail. \nPlease try applying in the next 30 days. \nWe regret the inconvenience caused. \nRegards,\nVoterAdmin,Telangana State");
         try {
         javaMailSender.send(msg);

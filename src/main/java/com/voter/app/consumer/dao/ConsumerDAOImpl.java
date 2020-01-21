@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.voter.app.consumer.communicate.VoterMailSender;
 import com.voter.app.consumer.model.EligibleVoters;
 import com.voter.app.consumer.model.InEligibleVoters;
+import com.voter.app.consumer.model.VoterEmailTemplate;
 
 /**
  * 
@@ -41,8 +42,15 @@ public class ConsumerDAOImpl implements ConsumerDAO {
 				update.set("state", eligibleVoter.getState());
 				mongoTemplate.updateFirst(query, update, EligibleVoters.class);
 			}
-			mailSender.sendEmail("Voter Application Status : ","Dear Applicant, \nYour Voter Application has been rejected due to the verification fail. \nPlease try applying in the next 30 days. \nWe regret the inconvenience caused. \nRegards,\nVoterAdmin,Telangana State"
-					,"thoya.mca@gmail.com", null, null, "OXG89819O398");
+			
+			VoterEmailTemplate emailTemplate = new VoterEmailTemplate();
+			emailTemplate.setToAddress("thoya.mca@gmail.com");
+			emailTemplate.setSubject("subject");
+			emailTemplate.setMailContent("Dear Applicant, \\nYour Voter Application has been rejected due to the verification fail. \\nPlease try applying in the next 30 days. \\nWe regret the inconvenience caused. \\nRegards,\\nVoterAdmin,Telangana State");
+			emailTemplate.setReferenceId("OXG89819O398");
+			
+			
+			mailSender.sendEmail(emailTemplate);
 		} catch(Exception ex) {
 			System.out.println("Error occured while saving the eligible voter information...");
 		}
