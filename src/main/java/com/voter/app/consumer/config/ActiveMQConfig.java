@@ -25,7 +25,7 @@ public class ActiveMQConfig {
 
 
 	/**
-	 * Voter Input Queue to read the messages
+	 * EligibleVoters Input Queue to read the messages
 	 * @return
 	 */
 	@Bean
@@ -34,7 +34,7 @@ public class ActiveMQConfig {
 	}
 	
 	/**
-	 * Voter Input Queue to read the messages
+	 * EligibleVoters Input Queue to read the messages
 	 * @return
 	 */
 	@Bean
@@ -43,7 +43,7 @@ public class ActiveMQConfig {
 	}
 
 	/**
-	 * Voter Input Queue to write the messages
+	 * EligibleVoters Input Queue to write the messages
 	 * @return
 	 */
 	@Bean

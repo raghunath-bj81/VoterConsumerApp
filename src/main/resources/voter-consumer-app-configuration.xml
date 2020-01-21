@@ -13,7 +13,6 @@
                                  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                                  http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.2.xsd
                                  http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
-                                 http://www.springframework.org/schema/integration/mail http://www.springframework.org/schema/integration/mail/spring-integration-mail-4.2.xsd
                                  http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml-4.2.xsd
                                  http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
                                  http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
@@ -65,9 +64,10 @@
 	<int:service-activator id="id.1" input-channel="filter.output.channel" ref="voterConsumerServiceActivator" 
 	output-channel="filter.input.channel" method = "success"/>
 	
+	
+	
 	<int:service-activator id="id.2" input-channel="filter.discard.channel" ref="voterConsumerServiceActivator" 
 	output-channel="filter.input.discard.channel" method = "discard"/>
-	
 	
 	<!-- Bean definitions to be used for the integrations -->
 </beans>

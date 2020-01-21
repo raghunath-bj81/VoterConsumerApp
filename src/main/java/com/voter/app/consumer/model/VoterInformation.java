@@ -31,41 +31,54 @@ public class VoterInformation implements Serializable {
 	@XmlElement(name="isEligible")
 	private boolean isEligible;
 	
-	public void setVoterId(int voterId) {
-		this.voterId = voterId;
-	}
-	public void setVoterName(String voterName) {
-		this.voterName = voterName;
-	}
-	public void setVoterAddress(String voterAddress) {
-		this.voterAddress = voterAddress;
-	}
-	public void setVoterProvince(String voterProvince) {
-		this.voterProvince = voterProvince;
-	}
-	public void setEligible(boolean isEligible) {
-		this.isEligible = isEligible;
-	}
-	
-	
+	@XmlElement(name="voterage")
+	private int voterAge;
+
 	public int getVoterId() {
 		return voterId;
 	}
-	
-	public String getVoterName() {
-		return voterName;	
+
+	public void setVoterId(int voterId) {
+		this.voterId = voterId;
 	}
-	
-	
+
+	public String getVoterName() {
+		return voterName;
+	}
+
+	public void setVoterName(String voterName) {
+		this.voterName = voterName;
+	}
+
 	public String getVoterAddress() {
 		return voterAddress;
 	}
-	
-	
-	  public String getVoterProvince() { return voterProvince; }
-	 
-	
-	
-	  public boolean isEligible() { return isEligible; }
-	 
+
+	public void setVoterAddress(String voterAddress) {
+		this.voterAddress = voterAddress;
+	}
+
+	public String getVoterProvince() {
+		return voterProvince;
+	}
+
+	public void setVoterProvince(String voterProvince) {
+		this.voterProvince = voterProvince;
+	}
+
+	public boolean isEligible() {
+		return isEligible;
+	}
+
+	public void setEligible(boolean isEligible) {
+		this.isEligible = isEligible;
+	}
+
+	public int getVoterAge() {
+		return voterAge;
+	}
+
+	public void setVoterAge(int voterAge) {
+		this.voterAge = voterAge;
+	}
 }
