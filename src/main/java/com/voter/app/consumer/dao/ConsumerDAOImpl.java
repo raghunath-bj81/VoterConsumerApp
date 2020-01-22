@@ -45,7 +45,8 @@ public class ConsumerDAOImpl implements ConsumerDAO {
 			VoterEmailTemplate emailTemplate = new VoterEmailTemplate();
 			emailTemplate.setToAddress(eligibleVoter.getEmailId());
 			emailTemplate.setSubject("Voter Application Status : ");
-			emailTemplate.setMailContent("Dear Applicant,\n \nYour Voter Application has been recieved and will be processed soon.\n \nPlease be updated with the notifications.\n \nRegards,\nVoter Admin,\nTelangana State");
+			emailTemplate.setMailContent("Dear " + eligibleVoter.getvoterName() + ",\n \nYour Voter Application has been recieved and will be processed soon.\n "
+					+ "\nPlease be updated with the notifications.\n \nRegards,\nChief Electrol Officer Admin,\nTelangana State,\nContact Us@ https://ceotelangana.nic.in/");
 			emailTemplate.setReferenceId(eligibleVoter.getReferenceId());
 			mailSender.sendEmail(emailTemplate);
 		} catch(Exception ex) {
