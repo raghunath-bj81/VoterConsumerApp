@@ -7,6 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Its the blue print of the XSD which is mentioned in the configuration folder.
+ * 
+ * @author rjosula
+ *
+ */
 @XmlRootElement(name="voterinformation")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class VoterInformation implements Serializable {

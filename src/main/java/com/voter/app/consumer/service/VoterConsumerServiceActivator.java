@@ -15,6 +15,13 @@ import com.voter.app.consumer.model.EligibleVoters;
 import com.voter.app.consumer.model.InEligibleVoters;
 import com.voter.app.consumer.model.VoterInformation;
 
+/**
+ * Consumer integration service which consumes and filters the voter 
+ * information based on their ages from the integration flow.
+ * 
+ * @author rjosula
+ *
+ */
 @Component
 public class VoterConsumerServiceActivator {
 	
@@ -31,7 +38,11 @@ public class VoterConsumerServiceActivator {
 		return voterMessage;
 	}
 	
- 
+	/**
+	 * On successfull integration filter condition of voter age >= 18 this method shall be triggered.
+	 * Also saves the data into database after which voter member will get email notification as well. 
+	 * @param eligibleVoterMsg
+	 */
 	public void success(Message<VoterInformation> eligibleVoterMsg) {
 		VoterMapper mapper = new VoterMapper();
 		EligibleVoters eligibleVoters = mapper.mapEligibleVoters(eligibleVoterMsg.getPayload());
@@ -44,6 +55,11 @@ public class VoterConsumerServiceActivator {
 		}
 	}
 	
+	/**
+	 * On failure of a condition from the integration filter where voter age < 18 this method shall be triggered.
+	 * Also saves the data into database after which voter member will get email notification as well. 
+	 * @param eligibleVoterMsg
+	 */
 	public void discard(Message<VoterInformation> ineligibleVoterMsg) {
 		VoterMapper mapper = new VoterMapper();
 		InEligibleVoters ineligibleVoters = mapper.mapInEligibleVoters(ineligibleVoterMsg.getPayload());
@@ -55,5 +71,4 @@ public class VoterConsumerServiceActivator {
 			System.out.println("Error occurred while saving in-eligible Voter");
 		}
 	}
-
 }

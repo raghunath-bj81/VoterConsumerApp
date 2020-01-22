@@ -10,13 +10,14 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 import com.mongodb.MongoClientURI;
 
+@SuppressWarnings("deprecation")
 @Configuration
 public class MongoConfig {
 
     @Autowired
     private Environment env;
 
-    @Bean
+	@Bean
     public MongoDbFactory mongoDbFactory() {
         return new SimpleMongoDbFactory(new MongoClientURI(env.getProperty("spring.data.mongodb.uri")));
     }
